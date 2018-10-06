@@ -41,3 +41,8 @@ $ trivia
 ```
 
 Available languages are listed in https://meta.wikimedia.org/wiki/List_of_Wikipedias
+
+## Author
+
+Amane Suzuki (@amaotone)
+
