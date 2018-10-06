@@ -10,15 +10,13 @@ import (
 	"github.com/urfave/cli"
 )
 
-const (
-	defaultLang = "en"
-)
-
 var (
-	flags = []cli.Flag{
+	homeDir   string
+	configDir string
+	flags     = []cli.Flag{
 		cli.StringFlag{
 			Name:  "lang, l",
-			Value: defaultLang,
+			Value: "en",
 			Usage: "This flag specify the language to search.\n\t" + "Available languages: https://meta.wikimedia.org/wiki/List_of_Wikipedias",
 		},
 	}
@@ -43,7 +41,12 @@ func action(c *cli.Context) {
 	}
 
 	title := doc.Find("#firstHeading").Text()
-	lead := doc.Find("#mw-content-text>div>p").First().Text()
+	lead := doc.Find("#mw-content-text > div > p").EachWithBreak(func(index int, s *goquery.Selection) bool {
+		if strings.TrimSpace(s.Text()) != "" {
+			return true
+		}
+		return false
+	}).Text()
 
 	bold := color.New(color.Bold)
 	bold.Println(strings.TrimSpace(title))
