@@ -10,17 +10,32 @@ import (
 	"github.com/urfave/cli"
 )
 
+const (
+	defaultLang = "en"
+)
+
+var (
+	flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "lang, l",
+			Value: defaultLang,
+			Usage: "This flag specify the language to search.\n\t" + "Available languages: https://meta.wikimedia.org/wiki/List_of_Wikipedias",
+		},
+	}
+)
+
 func initApp() *cli.App {
 	app := cli.NewApp()
 	app.Name = "Trivia"
-	app.Usage = "Make your life a little more happy."
+	app.Usage = "Trivia makes your life richer."
 	app.Version = "0.0.1"
 	app.Action = action
+	app.Flags = flags
 	return app
 }
 
 func action(c *cli.Context) {
-	lang := "ja"
+	lang := c.String("lang")
 	url := fmt.Sprintf("http://%s.wikipedia.org/wiki/Special:Randompage", lang)
 	doc, err := goquery.NewDocument(url)
 	if err != nil {
