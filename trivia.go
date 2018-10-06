@@ -11,33 +11,38 @@ import (
 )
 
 var (
-	homeDir   string
-	configDir string
-	flags     = []cli.Flag{
+	flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "lang, l",
-			Value: "en",
 			Usage: "This flag specify the language to search.\n\t" + "Available languages: https://meta.wikimedia.org/wiki/List_of_Wikipedias",
 		},
 	}
 )
 
-func initApp() *cli.App {
-	app := cli.NewApp()
-	app.Name = "Trivia"
-	app.Usage = "Trivia makes your life richer."
-	app.Version = "0.0.1"
-	app.Action = action
-	app.Flags = flags
-	return app
-}
+// os exit codes
+const (
+	ExitCodeOk = iota
+	ExitCodeError
+)
 
 func action(c *cli.Context) {
+	config := loadConfig()
+
+	// TODO: dirty implementation
 	lang := c.String("lang")
+	if lang == "" {
+		if config.Lang != "" {
+			lang = config.Lang
+		} else {
+			lang = "en"
+		}
+	}
+
 	url := fmt.Sprintf("http://%s.wikipedia.org/wiki/Special:Randompage", lang)
 	doc, err := goquery.NewDocument(url)
 	if err != nil {
-		fmt.Println("wikipedia scraping failed.")
+		fmt.Println("Wikipedia scraping failed.")
+		os.Exit(ExitCodeError)
 	}
 
 	title := doc.Find("#firstHeading").Text()
@@ -51,6 +56,25 @@ func action(c *cli.Context) {
 	bold := color.New(color.Bold)
 	bold.Println(strings.TrimSpace(title))
 	fmt.Println(strings.TrimSpace(lead))
+	os.Exit(ExitCodeOk)
+}
+
+func initApp() *cli.App {
+	app := cli.NewApp()
+	app.Name = "Trivia"
+	app.Usage = "Trivia makes your life richer."
+	app.Version = "0.0.1"
+	app.Commands = []cli.Command{
+		{
+			Name:   "set",
+			Usage:  "Save config to $HOME/.trivia/settings.json",
+			Action: setConfig,
+			Flags:  flags,
+		},
+	}
+	app.Action = action
+	app.Flags = flags
+	return app
 }
 
 func main() {

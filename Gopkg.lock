@@ -42,6 +42,14 @@
   version = "v0.0.4"
 
 [[projects]]
+  digest = "1:78bbb1ba5b7c3f2ed0ea1eab57bdd3859aec7e177811563edc41198a760b06af"
+  name = "github.com/mitchellh/go-homedir"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ae18d6b8b3205b561c79e8e5f69bff09736185f4"
+  version = "v1.0.0"
+
+[[projects]]
   digest = "1:b24d38b282bacf9791408a080f606370efa3d364e4b5fd9ba0f7b87786d3b679"
   name = "github.com/urfave/cli"
   packages = ["."]
@@ -74,6 +82,7 @@
   input-imports = [
     "github.com/PuerkitoBio/goquery",
     "github.com/fatih/color",
+    "github.com/mitchellh/go-homedir",
     "github.com/urfave/cli",
   ]
   solver-name = "gps-cdcl"
