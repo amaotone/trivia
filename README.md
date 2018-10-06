@@ -20,8 +20,6 @@ based in Elche, Province of Alicante, in the Valencian Community.During the 2016
 they will be competing in the following competitions: Segunda League, Copa del Rey.
 ```
 
-## Option
-
 Specify the language:
 
 ```bash
