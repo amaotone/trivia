@@ -46,12 +46,7 @@ func action(c *cli.Context) {
 	}
 
 	title := doc.Find("#firstHeading").Text()
-	lead := doc.Find("#mw-content-text > div > p").EachWithBreak(func(index int, s *goquery.Selection) bool {
-		if strings.TrimSpace(s.Text()) != "" {
-			return true
-		}
-		return false
-	}).Text()
+	lead := doc.Find("#mw-content-text > div > p").First().Text()
 
 	bold := color.New(color.Bold)
 	bold.Println(strings.TrimSpace(title))
