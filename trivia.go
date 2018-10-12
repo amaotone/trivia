@@ -25,6 +25,12 @@ const (
 	ExitCodeError
 )
 
+func parseDocument(doc *goquery.Document) (title string, lead string) {
+	title = doc.Find("#firstHeading").Text()
+	lead = doc.Find("#mw-content-text > div > p").First().Text()
+	return title, lead
+}
+
 func action(c *cli.Context) {
 	config := loadConfig()
 
@@ -45,9 +51,7 @@ func action(c *cli.Context) {
 		os.Exit(ExitCodeError)
 	}
 
-	title := doc.Find("#firstHeading").Text()
-	lead := doc.Find("#mw-content-text > div > p").First().Text()
-
+	title, lead := parseDocument(doc)
 	bold := color.New(color.Bold)
 	bold.Println(strings.TrimSpace(title))
 	fmt.Println(strings.TrimSpace(lead))
