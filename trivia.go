@@ -40,7 +40,7 @@ func action(c *cli.Context) {
 		if config.Lang != "" {
 			lang = config.Lang
 		} else {
-			lang = "en"
+			lang = "en" // default language
 		}
 	}
 

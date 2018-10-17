@@ -42,7 +42,6 @@ func setConfig(c *cli.Context) {
 	}
 }
 
-// LoadConfig load config file
 func loadConfig() jsonConfig {
 	homeDir, err := homedir.Dir()
 	if err != nil {
