@@ -64,7 +64,7 @@ func showWord(c *cli.Context) {
 	os.Exit(ExitCodeOk)
 }
 
-func initApp() *cli.App {
+func main() {
 	app := cli.NewApp()
 	app.Name = "Trivia"
 	app.Usage = "Trivia makes your life richer."
@@ -79,10 +79,5 @@ func initApp() *cli.App {
 	}
 	app.Action = showWord
 	app.Flags = flags
-	return app
-}
-
-func main() {
-	app := initApp()
 	app.Run(os.Args)
 }
