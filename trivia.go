@@ -72,7 +72,7 @@ func initApp() *cli.App {
 	app.Commands = []cli.Command{
 		{
 			Name:   "set",
-			Usage:  "Save config to $HOME/.trivia/settings.json",
+			Usage:  "Save config to $HOME/.trivia/config.json",
 			Action: setConfig,
 			Flags:  flags,
 		},
