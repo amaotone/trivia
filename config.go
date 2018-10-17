@@ -49,7 +49,7 @@ func loadConfig() jsonConfig {
 		os.Exit(ExitCodeError)
 	}
 	configDir = homeDir + "/.trivia"
-	configPath = configDir + "/settings.json"
+	configPath = configDir + "/config.json"
 
 	var config jsonConfig
 	if fileExists(configPath) {
