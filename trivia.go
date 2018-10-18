@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/fatih/color"
+	. "github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
 )
 
@@ -58,8 +58,7 @@ func fetchWord(lang string) (title string, lead string) {
 func showWord(c *cli.Context) {
 	lang := parseConfig(c)
 	title, lead := fetchWord(lang)
-	bold := color.New(color.Bold)
-	bold.Println(strings.TrimSpace(title))
+	fmt.Println(Bold(strings.TrimSpace(title)))
 	fmt.Println(strings.TrimSpace(lead))
 	os.Exit(ExitCodeOk)
 }
@@ -68,7 +67,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "Trivia"
 	app.Usage = "Trivia makes your life richer."
-	app.Version = "0.0.1"
+	app.Version = "0.0.2"
 	app.Commands = []cli.Command{
 		{
 			Name:   "set",
