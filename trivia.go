@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	. "github.com/logrusorgru/aurora"
+	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
 )
 
@@ -40,7 +40,7 @@ func parseConfig(c *cli.Context) (lang string) {
 
 func parseDocument(doc *goquery.Document) (title string, lead string) {
 	title = doc.Find("#firstHeading").Text()
-	lead = doc.Find("#mw-content-text > div > p").First().Text()
+	lead = doc.Find("#mw-content-text p").First().Text()
 	return title, lead
 }
 
@@ -58,7 +58,7 @@ func fetchWord(lang string) (title string, lead string) {
 func showWord(c *cli.Context) {
 	lang := parseConfig(c)
 	title, lead := fetchWord(lang)
-	fmt.Println(Bold(strings.TrimSpace(title)))
+	fmt.Println(aurora.Bold(strings.TrimSpace(title)))
 	fmt.Println(strings.TrimSpace(lead))
 	os.Exit(ExitCodeOk)
 }
